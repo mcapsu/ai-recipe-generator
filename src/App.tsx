@@ -1,11 +1,13 @@
 import { FormEvent, useState } from "react";
+import { ContactForm } from './Contactform'; 
+import ContactList from "./Contacts";
 import { Loader, Placeholder } from "@aws-amplify/ui-react";
 import "./App.css";
 import { Amplify } from "aws-amplify";
+import { signOut } from "aws-amplify/auth";
 import { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
-
 
 import "@aws-amplify/ui-react/styles.css";
 
@@ -14,6 +16,8 @@ Amplify.configure(outputs);
 const amplifyClient = generateClient<Schema>({
   authMode: "userPool",
 });
+
+
 
 function App() {
   const [result, setResult] = useState<string>("");
@@ -44,6 +48,16 @@ function App() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      window.location.href = "/"; // Or route to login page if you have one
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+  
+
   return (
     <div className="app-container">
       <div className="header-container">
@@ -58,6 +72,7 @@ function App() {
           demand...
         </p>
       </div>
+   
       <form onSubmit={onSubmit} className="form-container">
         <div className="search-container">
           <input
@@ -72,6 +87,11 @@ function App() {
           </button>
         </div>
       </form>
+      <button onClick={handleLogout} className="logout-button">
+        Sign Out Mofo
+      </button>
+      <ContactForm />
+      <ContactList />
       <div className="result-container">
         {loading ? (
           <div className="loader-container">

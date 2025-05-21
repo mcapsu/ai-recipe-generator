@@ -121,6 +121,20 @@
   background-color: #0056b3;
 }
 
+.logout-button {
+  margin-top: 1rem;
+  background-color: #e53e3e;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c53030;
+}
+
 .result-container {
   margin-top: 20px;
   transition: height 0.3s ease-out;
